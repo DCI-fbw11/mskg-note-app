@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Button,
   Modal,
@@ -6,59 +6,53 @@ import {
   FormControl,
   ListGroup,
   Form
-} from "react-bootstrap";
-import { withFirestore } from "react-redux-firebase";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import uuid from "uuid";
+} from 'react-bootstrap';
+import { withFirestore } from 'react-redux-firebase';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import uuid from 'uuid';
 
 class EditListModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listItemText: ""
+      type: this.props.userNotesObject[this.props.noteID].type,
+      title: this.props.userNotesObject[this.props.noteID].title,
+      list: this.props.userNotesObject[this.props.noteID].list,
+      createdAt: this.props.userNotesObject[this.props.noteID].createdAt,
+      editedAt: this.props.userNotesObject[this.props.noteID].editedAt,
+      pinned: this.props.userNotesObject[this.props.noteID].pinned,
+      color: this.props.userNotesObject[this.props.noteID].color,
+      listItemText: ''
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if(props === state){
-      return null
-    } 
-
-    console.log('hi')
-
-    const { noteID, userNotesObject } = props;
-
-    let note;
-    if (noteID) {
-      if (userNotesObject[noteID]) {
-        note = userNotesObject[noteID];
-      } else {
-        note = {};
-      }
-    }
-    return { ...state,...note };
-  }
-
   onChange = e => {
-    console.log('gsaadd')
-    console.log(this.state)
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  listItemOnChange = (e, index) => {
+    const list = [...this.state.list];
+    list.map(item => {
+      if (list.indexOf(item) !== index) {
+        return item;
+      }
+      list[index] = { ...list[index], text: e.target.value };
+      return null;
+    });
+    this.setState({ list: [...list] });
   };
 
   addListItem = e => {
     e.preventDefault();
     let newListItem = {
-      text: this.refs.listItemText.value,
+      text: this.state.listItemText,
       isDone: false
     };
 
-    console.log(newListItem)
-    console.log(this.state)
-
     this.setState({
       list: [...this.state.list, newListItem],
-      listItemText: "",
+      listItemText: ''
     });
   };
 
@@ -73,11 +67,10 @@ class EditListModal extends Component {
   };
 
   checkListItem = index => {
-    let refs = this.refs;
-    let list = this.state.list;
+    let list = [...this.state.list];
     let listItem = this.state.list[index];
     let editedListItem = {
-      text: refs[`item${index}`].value,
+      text: listItem.text,
       isDone: !listItem.isDone
     };
     list[index] = editedListItem;
@@ -91,42 +84,29 @@ class EditListModal extends Component {
     const { firestore, userID, noteID } = this.props;
 
     firestore.delete({
-      collection: "notes",
+      collection: 'notes',
       doc: userID,
-      subcollections: [{ collection: "notes", doc: noteID }]
+      subcollections: [{ collection: 'notes', doc: noteID }]
     });
     this.close();
   };
 
   close = () => {
     this.props.editListModalClose();
-    this.setState({ listItemText: "" });
+    this.setState({ listItemText: '' });
   };
 
   saveAndClose = note => {
-    let refs = this.refs;
-
     let newNote = {
-      ...note, editedAt: new Date(),
-      list: note.list.map((listItem, index) => {
-        return { text: refs[`item${index}`].value, isDone: listItem.isDone };
-      })
+      ...note,
+      editedAt: new Date()
     };
 
     this.props.editListModalSaveAndClose(newNote);
-    this.setState({ listItemText: "" });
+    this.setState({ listItemText: '' });
   };
 
   render() {
-    let list
-
-    if(this.state.list){
-      list = this.state.list
-    } else {
-      list = []
-    }
-    
-
     return (
       <div>
         <Modal
@@ -145,14 +125,14 @@ class EditListModal extends Component {
                 aria-label="note title"
                 aria-describedby="basic-addon1"
                 name="title"
-                defaultValue={this.state.title}
-                ref="title"
+                value={this.state.title}
+                onChange={this.onChange}
               />
             </InputGroup>
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
-              {list.map((listItem, index) => {
+              {this.state.list.map((listItem, index) => {
                 if (listItem) {
                   return (
                     <div key={uuid()}>
@@ -167,9 +147,12 @@ class EditListModal extends Component {
                         <FormControl
                           aria-describedby="list item description"
                           name="listItemText"
-                          defaultValue={listItem.text}
-                          ref={`item${index}`}
+                          value={listItem.text}
                           disabled={listItem.isDone ? true : false}
+                          onChange={e => {
+                            this.listItemOnChange(e, index);
+                          }}
+                          key={uuid()}
                         />
                         <InputGroup.Append>
                           <Button
@@ -194,8 +177,8 @@ class EditListModal extends Component {
                   aria-label="add list item here"
                   name="listItemText"
                   placeholder="add a list item here"
-                  defaultValue={this.state.listItemText}
-                  ref="listItemText"
+                  value={this.state.listItemText}
+                  onChange={this.onChange}
                 />
                 <InputGroup.Append>
                   <Button variant="outline-success" onClick={this.addListItem}>
@@ -206,10 +189,13 @@ class EditListModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-          <Button variant="danger" onClick={this.deleteNote}>
+            <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
             </Button>
-            <Button onClick={() => this.saveAndClose(this.state)}>
+            <Button
+              variant="success"
+              onClick={() => this.saveAndClose(this.state)}
+            >
               Save & Close
             </Button>
           </Modal.Footer>

@@ -1,18 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { Button } from "react-bootstrap";
-import uuid from "uuid";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { Button } from 'react-bootstrap';
+import uuid from 'uuid';
 
-import AddNoteModal from "./AddNoteModal";
-import EditNoteModal from "./EditNoteModal";
-import AddListModal from "./AddListModal";
-import EditListModal from "./EditListModal";
-import Note from "./Note";
-import List from "./List";
-import Spinner from "../layout/Spinner";
-
+import AddNoteModal from './AddNoteModal';
+import EditNoteModal from './EditNoteModal';
+import AddListModal from './AddListModal';
+import Note from './Note';
+import List from './List';
+import Spinner from '../layout/Spinner';
 
 class Notes extends React.Component {
   constructor(props) {
@@ -24,22 +22,22 @@ class Notes extends React.Component {
       editListModalShow: false,
       editNoteCache: null,
       noteTemplate: {
-        type: "text",
-        title: "",
-        text: "",
+        type: 'text',
+        title: '',
+        text: '',
         createdAt: new Date(),
-        editedAt: "",
+        editedAt: '',
         pinned: false,
-        color: "white"
+        color: 'white'
       },
       listTemplate: {
-        type: "list",
-        title: "",
+        type: 'list',
+        title: '',
         list: [],
         createdAt: new Date(),
-        editedAt: "",
+        editedAt: '',
         pinned: false,
-        color: "white"
+        color: 'white'
       }
     };
   }
@@ -47,7 +45,7 @@ class Notes extends React.Component {
   // add note modal functions
   addNoteModalClose = type => {
     console.log(`add ${type} modal closing`);
-    if (type === "note") {
+    if (type === 'note') {
       this.setState({ addNoteModalShow: false });
     } else {
       this.setState({ addListModalShow: false });
@@ -59,9 +57,9 @@ class Notes extends React.Component {
 
     firestore.add(
       {
-        collection: "notes",
+        collection: 'notes',
         doc: userID,
-        subcollections: [{ collection: "notes" }]
+        subcollections: [{ collection: 'notes' }]
       },
       newNote
     );
@@ -75,9 +73,9 @@ class Notes extends React.Component {
 
     firestore.add(
       {
-        collection: "notes",
+        collection: 'notes',
         doc: userID,
-        subcollections: [{ collection: "notes" }]
+        subcollections: [{ collection: 'notes' }]
       },
       newNote
     );
@@ -91,7 +89,7 @@ class Notes extends React.Component {
   };
 
   editNoteModalClose = () => {
-    console.log("edit note modal closing");
+    console.log('edit note modal closing');
     this.setState({ editNoteModalShow: false, editNoteCache: null });
   };
 
@@ -101,46 +99,14 @@ class Notes extends React.Component {
 
     firestore.update(
       {
-        collection: "notes",
+        collection: 'notes',
         doc: userID,
-        subcollections: [{ collection: "notes", doc: editNoteCache }]
+        subcollections: [{ collection: 'notes', doc: editNoteCache }]
       },
       editedNote
     );
 
     this.setState({ editNoteModalShow: false, editNoteCache: null });
-  };
-
-  // edit list modal functions
-  editList = id => {
-    console.log(id);
-    this.setState({ editNoteCache: id, editListModalShow: true });
-  };
-
-  editListModalClose = () => {
-    console.log("edit list modal closing");
-    this.setState({ editListModalShow: false, editNoteCache: null });
-  };
-
-  editListModalSaveAndClose = editedNote => {
-    console.log(editedNote)
-    // const { firestore, userID } = this.props;
-    // const { editNoteCache } = this.state;
-
-    // firestore.update(
-    //   {
-    //     collection: "notes",
-    //     doc: userID,
-    //     subcollections: [{ collection: "notes", doc: editNoteCache }]
-    //   },
-    //   editedNote
-    // );
-
-    // 
-      // THIS IS NOT WORKING
-    //
-
-    this.setState({ editListModalShow: false, editNoteCache: null });
   };
 
   logout = () => {
@@ -173,12 +139,12 @@ class Notes extends React.Component {
           </div>
           <div
             className="container"
-            style={{ display: "flex", flexFlow: "row wrap" }}
+            style={{ display: 'flex', flexFlow: 'row wrap' }}
           >
             {userNotes
               .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
               .map(note => {
-                if (note.type === "text") {
+                if (note.type === 'text') {
                   return (
                     <Note note={note} editNote={this.editNote} key={uuid()} />
                   );
@@ -205,12 +171,6 @@ class Notes extends React.Component {
             addNoteModalClose={this.addNoteModalClose}
             addListModalSaveAndClose={this.addListModalSaveAndClose}
           />
-          <EditListModal
-            editListModalShow={this.state.editListModalShow}
-            editListModalClose={this.editListModalClose}
-            editListModalSaveAndClose={this.editListModalSaveAndClose}
-            noteID={this.state.editNoteCache}
-          />
         </div>
       );
     } else {
@@ -223,10 +183,10 @@ export default compose(
   firestoreConnect(({ firebase }) => {
     return [
       {
-        collection: "notes",
+        collection: 'notes',
         doc: firebase.auth().O,
-        subcollections: [{ collection: "notes" }],
-        storeAs: "userNotes"
+        subcollections: [{ collection: 'notes' }],
+        storeAs: 'userNotes'
       }
     ];
   }),
