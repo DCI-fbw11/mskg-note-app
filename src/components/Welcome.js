@@ -1,25 +1,24 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Container} from "react-bootstrap";
 
 class Welcome extends Component {
   render() {
     return (
-      <Container>
-        <Row className="justify-content-center mt-5">
-          <Col sm={5} >
-            <h1 style={{textAlign:"center"}}>Welcome</h1>
 
-              <Link to="/login">
-                <Button variant="outline-dark">Login</Button>
-              </Link>
-              <Link to="/register">
-                <Button variant="outline-dark">Register</Button>
-              </Link>
+      <Container className="mt-5"style={{textAlign:"center"}}>
+        <h1>Welcome!</h1>
+        <p>Notes are fun. Take some notes.</p>
+        <p>
+          <Link to="/login">
+            <Button className="m-2" variant="outline-dark">Login</Button>
+          </Link>
+          <Link to="/register">
+            <Button className="m-2" variant="outline-dark">Register</Button>
+          </Link>
+        </p>
+        </Container>
 
-          </Col>
-        </Row>
-      </Container>
     );
   }
 }

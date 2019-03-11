@@ -7,7 +7,6 @@ import {
   ListGroup,
   Form
 } from "react-bootstrap";
-import uuid from "uuid";
 
 class AddListModal extends Component {
   constructor(props) {
