@@ -1,16 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import { Button } from 'react-bootstrap';
-import uuid from 'uuid';
+import React from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { Button, Row, Container } from "react-bootstrap";
+import uuid from "uuid";
 
-import AddNoteModal from './AddNoteModal';
-import EditNoteModal from './EditNoteModal';
-import AddListModal from './AddListModal';
-import Note from './Note';
-import List from './List';
-import Spinner from '../layout/Spinner';
+import AddNoteModal from "./AddNoteModal";
+import EditNoteModal from "./EditNoteModal";
+import AddListModal from "./AddListModal";
+import Note from "./Note";
+import List from "./List";
+import Spinner from "../layout/Spinner";
 
 class Notes extends React.Component {
   constructor(props) {
@@ -22,22 +22,22 @@ class Notes extends React.Component {
       editListModalShow: false,
       editNoteCache: null,
       noteTemplate: {
-        type: 'text',
-        title: '',
-        text: '',
+        type: "text",
+        title: "",
+        text: "",
         createdAt: new Date(),
-        editedAt: '',
+        editedAt: "",
         pinned: false,
-        color: 'white'
+        color: "white"
       },
       listTemplate: {
-        type: 'list',
-        title: '',
+        type: "list",
+        title: "",
         list: [],
         createdAt: new Date(),
-        editedAt: '',
+        editedAt: "",
         pinned: false,
-        color: 'white'
+        color: "white"
       }
     };
   }
@@ -45,7 +45,7 @@ class Notes extends React.Component {
   // add note modal functions
   addNoteModalClose = type => {
     console.log(`add ${type} modal closing`);
-    if (type === 'note') {
+    if (type === "note") {
       this.setState({ addNoteModalShow: false });
     } else {
       this.setState({ addListModalShow: false });
@@ -57,9 +57,9 @@ class Notes extends React.Component {
 
     firestore.add(
       {
-        collection: 'notes',
+        collection: "notes",
         doc: userID,
-        subcollections: [{ collection: 'notes' }]
+        subcollections: [{ collection: "notes" }]
       },
       newNote
     );
@@ -73,9 +73,9 @@ class Notes extends React.Component {
 
     firestore.add(
       {
-        collection: 'notes',
+        collection: "notes",
         doc: userID,
-        subcollections: [{ collection: 'notes' }]
+        subcollections: [{ collection: "notes" }]
       },
       newNote
     );
@@ -89,7 +89,7 @@ class Notes extends React.Component {
   };
 
   editNoteModalClose = () => {
-    console.log('edit note modal closing');
+    console.log("edit note modal closing");
     this.setState({ editNoteModalShow: false, editNoteCache: null });
   };
 
@@ -99,9 +99,9 @@ class Notes extends React.Component {
 
     firestore.update(
       {
-        collection: 'notes',
+        collection: "notes",
         doc: userID,
-        subcollections: [{ collection: 'notes', doc: editNoteCache }]
+        subcollections: [{ collection: "notes", doc: editNoteCache }]
       },
       editedNote
     );
@@ -119,32 +119,28 @@ class Notes extends React.Component {
 
     if (userNotes) {
       return (
-        <div>
-          <div className="container">
+        <Container>
+          <Row className="justify-content-center mt-3">
             <Button
-              className="btn btn-success m-2"
+            variant="outline-success"
+              className="m-2"
               onClick={() => this.setState({ addNoteModalShow: true })}
             >
-              <i className="fas fa-plus" /> Add Note
+              <i className="fas fa-plus" /> Add Note &nbsp;<i class="far fa-sticky-note"></i>
             </Button>
             <Button
-              className="btn btn-success m-2"
+            variant="outline-success"
+              className="m-2"
               onClick={() => this.setState({ addListModalShow: true })}
             >
-              <i className="fas fa-plus" /> Add List
+              <i className="fas fa-plus" /> Add List &nbsp;<i class="fas fa-list"></i>
             </Button>
-            <Button onClick={this.logout} variant="info">
-              Logout
-            </Button>
-          </div>
-          <div
-            className="container"
-            style={{ display: 'flex', flexFlow: 'row wrap' }}
-          >
+          </Row>
+          <Row className="justify-content-center mt-3">
             {userNotes
               .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
               .map(note => {
-                if (note.type === 'text') {
+                if (note.type === "text") {
                   return (
                     <Note note={note} editNote={this.editNote} key={uuid()} />
                   );
@@ -154,7 +150,7 @@ class Notes extends React.Component {
                   );
                 }
               })}
-          </div>
+          </Row>
           <AddNoteModal
             addNoteModalShow={this.state.addNoteModalShow}
             addNoteModalClose={this.addNoteModalClose}
@@ -171,7 +167,7 @@ class Notes extends React.Component {
             addNoteModalClose={this.addNoteModalClose}
             addListModalSaveAndClose={this.addListModalSaveAndClose}
           />
-        </div>
+        </Container>
       );
     } else {
       return <Spinner />;
@@ -183,10 +179,10 @@ export default compose(
   firestoreConnect(({ firebase }) => {
     return [
       {
-        collection: 'notes',
+        collection: "notes",
         doc: firebase.auth().O,
-        subcollections: [{ collection: 'notes' }],
-        storeAs: 'userNotes'
+        subcollections: [{ collection: "notes" }],
+        storeAs: "userNotes"
       }
     ];
   }),

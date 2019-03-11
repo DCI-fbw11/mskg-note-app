@@ -7,9 +7,9 @@ import Welcome from "./components/Welcome";
 import Notes from "./components/Notes";
 
 import { UserIsAuthenticated, UserIsNotAuthenticated } from "./auth/auth";
-import {store} from './config/store'
-import {withFirebase} from 'react-redux-firebase'
-
+import { store } from "./config/store";
+import { withFirebase } from "react-redux-firebase";
+import TopNav from "./layout/TopNav";
 
 class App extends Component {
   render() {
@@ -17,7 +17,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <React.Fragment>
-            <h1 className="m-3">Notes</h1>
+            <TopNav />
             <Switch>
               <Route
                 exact

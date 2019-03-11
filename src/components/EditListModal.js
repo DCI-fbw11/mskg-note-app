@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Button,
   Modal,
@@ -6,11 +6,10 @@ import {
   FormControl,
   ListGroup,
   Form
-} from 'react-bootstrap';
-import { withFirestore } from 'react-redux-firebase';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import uuid from 'uuid';
+} from "react-bootstrap";
+import { withFirestore } from "react-redux-firebase";
+import { connect } from "react-redux";
+import { compose } from "redux";
 
 class EditListModal extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class EditListModal extends Component {
       editedAt: this.props.userNotesObject[this.props.noteID].editedAt,
       pinned: this.props.userNotesObject[this.props.noteID].pinned,
       color: this.props.userNotesObject[this.props.noteID].color,
-      listItemText: ''
+      listItemText: ""
     };
   }
 
@@ -33,13 +32,7 @@ class EditListModal extends Component {
 
   listItemOnChange = (e, index) => {
     const list = [...this.state.list];
-    list.map(item => {
-      if (list.indexOf(item) !== index) {
-        return item;
-      }
-      list[index] = { ...list[index], text: e.target.value };
-      return null;
-    });
+    list[index] = { ...list[index], text: e.target.value };
     this.setState({ list: [...list] });
   };
 
@@ -52,7 +45,7 @@ class EditListModal extends Component {
 
     this.setState({
       list: [...this.state.list, newListItem],
-      listItemText: ''
+      listItemText: ""
     });
   };
 
@@ -84,26 +77,36 @@ class EditListModal extends Component {
     const { firestore, userID, noteID } = this.props;
 
     firestore.delete({
-      collection: 'notes',
+      collection: "notes",
       doc: userID,
-      subcollections: [{ collection: 'notes', doc: noteID }]
+      subcollections: [{ collection: "notes", doc: noteID }]
     });
     this.close();
   };
 
   close = () => {
     this.props.editListModalClose();
-    this.setState({ listItemText: '' });
+    this.setState({
+      title: this.props.userNotesObject[this.props.noteID].title,
+      list: this.props.userNotesObject[this.props.noteID].list,
+      listItemText: ""
+    });
   };
 
-  saveAndClose = note => {
+  saveAndClose = () => {
     let newNote = {
-      ...note,
-      editedAt: new Date()
+      type: this.state.type,
+      title: this.state.title,
+      list: this.state.list,
+      createdAt: this.state.createdAt,
+      editedAt: new Date(),
+      pinned: this.state.pinned,
+      color: this.state.color,
+
     };
 
     this.props.editListModalSaveAndClose(newNote);
-    this.setState({ listItemText: '' });
+    this.setState({ listItemText: "" });
   };
 
   render() {
@@ -135,7 +138,7 @@ class EditListModal extends Component {
               {this.state.list.map((listItem, index) => {
                 if (listItem) {
                   return (
-                    <div key={uuid()}>
+                    <div key={index}>
                       <InputGroup className="mb-3">
                         <InputGroup.Prepend>
                           <InputGroup.Checkbox
@@ -152,7 +155,7 @@ class EditListModal extends Component {
                           onChange={e => {
                             this.listItemOnChange(e, index);
                           }}
-                          key={uuid()}
+                          key={index}
                         />
                         <InputGroup.Append>
                           <Button
@@ -194,7 +197,7 @@ class EditListModal extends Component {
             </Button>
             <Button
               variant="success"
-              onClick={() => this.saveAndClose(this.state)}
+              onClick={this.saveAndClose}
             >
               Save & Close
             </Button>

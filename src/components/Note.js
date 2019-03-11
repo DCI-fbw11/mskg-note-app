@@ -8,10 +8,13 @@ const Note = props => {
   return (
     <Card style={{ width: "20rem" }} key={uuid()} className="m-3">
       <Card.Body>
-        <Card.Title>{note.title}</Card.Title>
+        <Card.Title style={note.title === "" ? { color: "#dddddd" } : null}>
+          {note.title === "" ? "no title" : note.title}
+        </Card.Title>
         <Card.Text>{note.text}</Card.Text>
-        <Button size="sm" variant="light" onClick={() => editNote(note.id)}>
-          <i className="fa fa-edit" /> Edit
+
+        <Button className="float-right" size="sm" variant="outline-secondary" onClick={() => editNote(note.id)}>
+          <i className="fa fa-edit" />
         </Button>
       </Card.Body>
     </Card>

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Card, Button } from 'react-bootstrap';
-import uuid from 'uuid';
-import { withFirestore } from 'react-redux-firebase';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import EditListModal from './EditListModal';
+import React, { Component } from "react";
+import { Card, Button } from "react-bootstrap";
+import uuid from "uuid";
+import { withFirestore } from "react-redux-firebase";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import EditListModal from "./EditListModal";
 
 class List extends Component {
   constructor(props) {
@@ -23,26 +23,15 @@ class List extends Component {
   };
 
   modalSaveAndClose = editedNote => {
-    console.log(editedNote);
     const { firestore, userID, note } = this.props;
-
-    let noteToSend = {
-      type: editedNote.type,
-      title: editedNote.title,
-      list: editedNote.list,
-      createdAt: editedNote.createdAt,
-      editedAt: new Date(),
-      pinned: editedNote.pinned,
-      color: editedNote.color
-    };
 
     firestore.update(
       {
-        collection: 'notes',
+        collection: "notes",
         doc: userID,
-        subcollections: [{ collection: 'notes', doc: note.id }]
+        subcollections: [{ collection: "notes", doc: note.id }]
       },
-      noteToSend
+      editedNote
     );
 
     this.setState({ modalShow: false });
@@ -53,9 +42,11 @@ class List extends Component {
 
     return (
       <div>
-        <Card style={{ width: '20rem' }} key={uuid()} className="m-3">
+        <Card style={{ width: "20rem" }} key={uuid()} className="m-3">
           <Card.Body>
-            <Card.Title>{note.title}</Card.Title>
+            <Card.Title style={note.title === "" ? { color: "#dddddd" } : null}>
+              {note.title === "" ? "no title" : note.title}
+            </Card.Title>
 
             <ul>
               {note.list.map((listItem, index) => {
@@ -64,7 +55,7 @@ class List extends Component {
                     <li
                       style={
                         listItem.isDone
-                          ? { textDecoration: 'line-through' }
+                          ? { textDecoration: "line-through" }
                           : null
                       }
                       key={uuid()}
@@ -78,8 +69,8 @@ class List extends Component {
               })}
             </ul>
 
-            <Button size="sm" variant="light" onClick={this.modalOpen}>
-              <i className="fa fa-edit" /> Edit
+            <Button className="float-right" size="sm" variant="outline-secondary" onClick={this.modalOpen}>
+              <i className="fa fa-edit" />
             </Button>
           </Card.Body>
         </Card>

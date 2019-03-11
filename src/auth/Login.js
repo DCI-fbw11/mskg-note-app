@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { firebaseConnect } from "react-redux-firebase";
 
 class Login extends Component {
@@ -33,33 +33,37 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h4>Login</h4>
-        <Form onSubmit={this.loginUser}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              onChange={this.changeHander}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={this.changeHander}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Login
-          </Button>
-        </Form>
-        <h5>{this.state.error}</h5>
-      </div>
+      <Container>
+        <Row className="justify-content-center mt-5">
+          <Col sm={5}>
+            <h4>Login</h4>
+            <Form onSubmit={this.loginUser}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  onChange={this.changeHander}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={this.changeHander}
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Login
+              </Button>
+            </Form>
+            <h5 className="mt-3">{this.state.error}</h5>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

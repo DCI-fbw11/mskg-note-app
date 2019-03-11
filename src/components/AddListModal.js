@@ -28,6 +28,12 @@ class AddListModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  listItemOnChange = (e, index) => {
+    const list = [...this.state.list];
+    list[index] = { ...list[index], text: e.target.value };
+    this.setState({ list: [...list] });
+  };
+
   addListItem = e => {
     e.preventDefault();
     let newListItem = {
@@ -35,7 +41,7 @@ class AddListModal extends Component {
       isDone: false,
     };
 
-    
+
 
     this.setState({
       list: [...this.state.list, newListItem],
@@ -54,11 +60,10 @@ class AddListModal extends Component {
   };
 
   checkListItem = index => {
-    let refs = this.refs;
-    let list = this.state.list;
+    let list = [...this.state.list];
     let listItem = this.state.list[index];
     let editedListItem = {
-      text: refs[`item${index}`].value,
+      text: listItem.text,
       isDone: !listItem.isDone
     };
     list[index] = editedListItem;
@@ -74,13 +79,14 @@ class AddListModal extends Component {
   };
 
   saveAndClose = note => {
-    let refs = this.refs;
-
     let newNote = {
-      ...note,
-      list: note.list.map((listItem, index) => {
-        return { text: refs[`item${index}`].value, isDone: listItem.isDone };
-      })
+      type: this.state.type,
+      title: this.state.title,
+      list: this.state.list,
+      createdAt: this.state.createdAt,
+      editedAt: this.state.editedAt,
+      pinned: this.state.pinned,
+      color: this.state.color,
     };
 
     this.props.addListModalSaveAndClose(newNote);
@@ -118,7 +124,7 @@ class AddListModal extends Component {
               {list.map((listItem, index) => {
                 if (listItem) {
                   return (
-                    <div key={uuid()}>
+                    <div key={index}>
                       <InputGroup className="mb-3">
                         <InputGroup.Prepend>
                           <InputGroup.Checkbox
@@ -130,9 +136,12 @@ class AddListModal extends Component {
                         <FormControl
                           aria-describedby="list item description"
                           name="listItemText"
-                          defaultValue={listItem.text}
-                          ref={`item${index}`}
+                          value={listItem.text}
                           disabled={listItem.isDone ? true : false}
+                          onChange={e => {
+                            this.listItemOnChange(e, index);
+                          }}
+                          key={index}
                         />
                         <InputGroup.Append>
                           <Button
@@ -169,7 +178,7 @@ class AddListModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => this.saveAndClose(this.state)}>
+            <Button variant="success" onClick={this.saveAndClose}>
               Save & Close
             </Button>
           </Modal.Footer>

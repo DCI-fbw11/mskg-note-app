@@ -60,6 +60,7 @@ class AddNoteModal extends Component {
               <FormControl
                 as="textarea"
                 aria-label="With textarea"
+                placeholder="enter your note here"
                 name="text"
                 value={this.state.text}
                 onChange={this.onChange}
@@ -67,7 +68,7 @@ class AddNoteModal extends Component {
             </InputGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => this.saveAndClose(this.state)}>
+            <Button variant="success" onClick={() => this.saveAndClose(this.state)}>
               Save & Close
             </Button>
           </Modal.Footer>
