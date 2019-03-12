@@ -66,7 +66,7 @@ class Notes extends React.Component {
     if (userNotes) {
       return (
         <Container className="notesPage" fluid>
-          <Row>
+          <Row id="notesButtons">
             <Button
               variant="outline-success"
               className="m-2"

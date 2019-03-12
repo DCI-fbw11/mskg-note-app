@@ -1,15 +1,28 @@
 .notesContent {
+  padding-top: 1%;
   display: flex;
   flex-flow: row wrap;
-  margin-top: 5%;
   justify-content: center;
   align-items: center;
 }
 
+#notesButtons {
+  z-index: 99;
+  width: fit-content;
+  background-color: transparent;
+  max-height: fit-content;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
 .notesPage {
-  margin-top: 5%;
+  margin: 0;
+  padding: 0;
+  padding-top: 4em;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   height: 100vh;
+  background-color: transparent;
 }

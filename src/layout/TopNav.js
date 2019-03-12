@@ -13,13 +13,26 @@ const TopNav = props => {
 
   return (
     <Navbar bg="dark" variant="dark" fixed="top">
-      <Link to="/"><Navbar.Brand>Notes</Navbar.Brand></Link>
+      <Link to="/">
+        <Navbar.Brand>Notes</Navbar.Brand>
+      </Link>
       <Nav className="ml-auto">
-        {props.auth.hasOwnProperty("uid") ? null : <Link className="nav-link" to="/register">Sign Up</Link>}
-        {props.auth.hasOwnProperty("uid") ? null : <Link  className="nav-link" to="/login">Sign In</Link>}
-        {props.auth.hasOwnProperty("uid") ? <Nav.Link onClick={logout}>
-              Logout
-        </Nav.Link> : null}
+      {props.auth.hasOwnProperty("uid") ? (
+          <span className="nav-link disabled" >{props.auth.email}</span>
+        ) : null}
+        {props.auth.hasOwnProperty("uid") ? null : (
+          <Link className="nav-link" to="/register">
+            Sign Up
+          </Link>
+        )}
+        {props.auth.hasOwnProperty("uid") ? null : (
+          <Link className="nav-link" to="/login">
+            Sign In
+          </Link>
+        )}
+        {props.auth.hasOwnProperty("uid") ? (
+          <Nav.Link onClick={logout}>Logout</Nav.Link>
+        ) : null}
       </Nav>
     </Navbar>
   );
