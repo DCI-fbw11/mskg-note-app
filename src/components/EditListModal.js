@@ -16,13 +16,7 @@ class EditListModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: this.props.userNotesObject[this.props.noteID].type,
-      title: this.props.userNotesObject[this.props.noteID].title,
-      list: this.props.userNotesObject[this.props.noteID].list,
-      createdAt: this.props.userNotesObject[this.props.noteID].createdAt,
-      editedAt: this.props.userNotesObject[this.props.noteID].editedAt,
-      pinned: this.props.userNotesObject[this.props.noteID].pinned,
-      color: this.props.userNotesObject[this.props.noteID].color,
+      ...this.props.userNotesObject[this.props.noteID],
       listItemText: ""
     };
   }

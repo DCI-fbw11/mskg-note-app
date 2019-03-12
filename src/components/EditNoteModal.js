@@ -8,22 +8,12 @@ import ColorPicker from "./ColorPicker";
 class EditNoteModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {...this.props.userNotesObject[this.props.noteID]};
   }
 
-  static getDerivedStateFromProps(props, state) {
-    const { noteID, userNotesObject } = props;
-
-    let note;
-    if (noteID) {
-      if (userNotesObject[noteID]) {
-        note = userNotesObject[noteID];
-      } else {
-        note = {};
-      }
-    }
-    return { ...note };
-  }
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   deleteNote = () => {
     const { firestore, userID, noteID } = this.props;
@@ -40,15 +30,10 @@ class EditNoteModal extends Component {
     this.props.editNoteModalClose();
   };
 
-  saveAndClose = note => {
+  saveAndClose = () => {
     const editedNote = {
-      type: note.type,
-      title: this.refs.title.value,
-      text: this.refs.text.value,
-      createdAt: note.createdAt,
-      editedAt: new Date(),
-      pinned: note.pinned,
-      color: note.color
+      ...this.state,
+      editedAt: new Date()
     };
     this.props.editNoteModalSaveAndClose(editedNote);
   };
@@ -76,8 +61,8 @@ class EditNoteModal extends Component {
                 aria-label="note title"
                 aria-describedby="basic-addon1"
                 name="title"
-                ref="title"
-                defaultValue={this.state.title}
+                onChange={this.onChange}
+                value={this.state.title? this.state.title : ""}
               />
             </InputGroup>
           </Modal.Header>
@@ -87,8 +72,8 @@ class EditNoteModal extends Component {
                 as="textarea"
                 aria-label="With textarea"
                 name="text"
-                ref="text"
-                defaultValue={this.state.text}
+                onChange={this.onChange}
+                value={this.state.text ? this.state.text : ""}
               />
             </InputGroup>
           </Modal.Body>
@@ -97,10 +82,7 @@ class EditNoteModal extends Component {
             <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
             </Button>
-            <Button
-              variant="success"
-              onClick={() => this.saveAndClose(this.state)}
-            >
+            <Button variant="success" onClick={this.saveAndClose}>
               Save & Close
             </Button>
           </Modal.Footer>
