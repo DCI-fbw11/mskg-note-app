@@ -10,6 +10,7 @@ import {
 import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import ColorPicker from "./ColorPicker";
 
 class EditListModal extends Component {
   constructor(props) {
@@ -101,12 +102,16 @@ class EditListModal extends Component {
       createdAt: this.state.createdAt,
       editedAt: new Date(),
       pinned: this.state.pinned,
-      color: this.state.color,
-
+      color: this.state.color
     };
 
     this.props.editListModalSaveAndClose(newNote);
     this.setState({ listItemText: "" });
+  };
+
+  changeColor = color => {
+    console.log(color);
+    this.setState({ color });
   };
 
   render() {
@@ -192,13 +197,11 @@ class EditListModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
+            <ColorPicker changeColor={this.changeColor} />
             <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
             </Button>
-            <Button
-              variant="success"
-              onClick={this.saveAndClose}
-            >
+            <Button variant="success" onClick={this.saveAndClose}>
               Save & Close
             </Button>
           </Modal.Footer>

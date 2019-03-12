@@ -3,6 +3,7 @@ import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import ColorPicker from "./ColorPicker";
 
 class EditNoteModal extends Component {
   constructor(props) {
@@ -52,6 +53,10 @@ class EditNoteModal extends Component {
     this.props.editNoteModalSaveAndClose(editedNote);
   };
 
+  changeColor = color => {
+    this.setState({ color });
+  };
+
   render() {
     return (
       <div>
@@ -88,6 +93,7 @@ class EditNoteModal extends Component {
             </InputGroup>
           </Modal.Body>
           <Modal.Footer>
+            <ColorPicker changeColor={this.changeColor} />
             <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
             </Button>
