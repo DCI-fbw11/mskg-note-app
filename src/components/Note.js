@@ -54,7 +54,7 @@ class Note extends Component{
         </Card.Title>
         <Card.Text>{note.text}</Card.Text>
         <Button
-          className="float-right"
+          className="note-btn float-right"
           size="sm"
           variant="outline-secondary"
           onClick={this.modalOpen}

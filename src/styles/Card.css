@@ -1,0 +1,8 @@
+.note-btn {
+  opacity: 0;
+  transition: all 0.2s linear;
+}
+
+.card-body:hover > .note-btn {
+  opacity: 1;
+}
