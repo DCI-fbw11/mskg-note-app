@@ -8,7 +8,7 @@ import ColorPicker from "./ColorPicker";
 class EditNoteModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {...this.props.userNotesObject[this.props.noteID]};
+    this.state = { ...this.props.userNotesObject[this.props.noteID] };
   }
 
   onChange = e => {
@@ -43,7 +43,6 @@ class EditNoteModal extends Component {
   };
 
   render() {
-
     return (
       <div>
         <Modal
@@ -79,6 +78,16 @@ class EditNoteModal extends Component {
             </InputGroup>
           </Modal.Body>
           <Modal.Footer>
+            <div>
+              <i
+                class="fas fa-palette"
+                style={{
+                  fontSize: "1.6rem",
+                  color: this.state.color,
+                  textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)"
+                }}
+              />
+            </div>
             <ColorPicker changeColor={this.changeColor} />
             <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />

@@ -1,0 +1,176 @@
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formflex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 18rem;
+    width: 35rem;
+    background-color: #eeeeaa;
+    -webkit-box-shadow: 10px 10px 24px -2px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 10px 10px 24px -2px rgba(0, 0, 0, 0.4);
+    box-shadow: 10px 10px 24px -2px rgba(0, 0, 0, 0.4);
+}
+
+.logbg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin-top: 15rem;
+    margin-left: 8rem;
+}
+
+.landigbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin-top: 12rem;
+    margin-right: 13rem;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.0);
+}
+
+#imgBox {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 3.5rem;
+    margin-left: 50rem;
+    text-shadow: 4px 3px 0 #7A7A7A;
+}
+
+.titlelow {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 8rem;
+    text-shadow: 4px 3px 0 #7A7A7A;
+    margin-left: 50rem;
+    color: #eee;
+}
+
+.navbar-brand {
+    font-size: 3rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #fff;
+}
+
+span {
+    color: #ffdb24;
+}
+
+Button {
+    -moz-box-shadow: inset 0px 1px 0px 0px #fff6af;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #fff6af;
+    box-shadow: inset 0px 1px 0px 0px #fff6af;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffdb24));
+    background: -moz-linear-gradient(top, #ffec64 5%, #ffdb24 100%);
+    background: -webkit-linear-gradient(top, #ffec64 5%, #ffdb24 100%);
+    background: -o-linear-gradient(top, #ffec64 5%, #ffdb24 100%);
+    background: -ms-linear-gradient(top, #ffec64 5%, #ffdb24 100%);
+    background: linear-gradient(to bottom, #ffec64 5%, #ffdb24 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffdb24', GradientType=0);
+    background-color: #ffec64;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #ffe224 !important;
+    display: inline-block;
+    cursor: pointer;
+    color: #4f494f;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+    height: 2.5rem;
+    width: 8rem;
+}
+
+Button:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffdb24), color-stop(1, #ffec64));
+    background: -moz-linear-gradient(top, #ffdb24 5%, #ffec64 100%);
+    background: -webkit-linear-gradient(top, #ffdb24 5%, #ffec64 100%);
+    background: -o-linear-gradient(top, #ffdb24 5%, #ffec64 100%);
+    background: -ms-linear-gradient(top, #ffdb24 5%, #ffec64 100%);
+    background: linear-gradient(to bottom, #ffdb24 5%, #ffec64 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdb24', endColorstr='#ffec64', GradientType=0);
+    background-color: #ffdb24;
+}
+
+Button:active {
+    position: relative;
+    top: 1px;
+}
+
+.btn:focus {
+    outline: none !important;
+    outline-offset: none !important;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+}
+
+.link:hover {
+    text-decoration: none;
+    color: #ee7777;
+}
+
+.animate {
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+}
+
+.action-button {
+    position: relative;
+    padding: 10px 40px;
+    margin: 0px 10px 10px 0px;
+    float: left;
+    border-radius: 10px;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.yellow {
+    background-color: #eeee66;
+    border-bottom: 5px solid #ddcc22;
+    text-shadow: 0px -2px #ddcc22;
+}
+
+.action-button:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    border-bottom: 1px solid;
+}
+
+.landingbtn {
+    margin-left: 50rem;
+}
+
+.container {
+    width: 35rem;
+}
+
+body {
+    background-image: url("../img/test4.png");
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center top;
+}
