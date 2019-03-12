@@ -6,7 +6,6 @@ import { Button, Row, Container } from "react-bootstrap";
 import uuid from "uuid";
 
 import AddNoteModal from "./AddNoteModal";
-import EditNoteModal from "./EditNoteModal";
 import AddListModal from "./AddListModal";
 import Note from "./Note";
 import List from "./List";
@@ -17,10 +16,7 @@ class Notes extends React.Component {
     super(props);
     this.state = {
       addNoteModalShow: false,
-      editNoteModalShow: false,
-      addListModalShow: false,
-      editListModalShow: false,
-      editNoteCache: null
+      addListModalShow: false
     };
   }
 
@@ -64,51 +60,28 @@ class Notes extends React.Component {
     this.setState({ addListModalShow: false });
   };
 
-  // edit note modal functions
-  editNote = id => {
-    this.setState({ editNoteCache: id, editNoteModalShow: true });
-  };
-
-  editNoteModalClose = () => {
-    this.setState({ editNoteModalShow: false, editNoteCache: null });
-  };
-
-  editNoteModalSaveAndClose = editedNote => {
-    const { firestore, userID } = this.props;
-    const { editNoteCache } = this.state;
-
-    firestore.update(
-      {
-        collection: "notes",
-        doc: userID,
-        subcollections: [{ collection: "notes", doc: editNoteCache }]
-      },
-      editedNote
-    );
-
-    this.setState({ editNoteModalShow: false, editNoteCache: null });
-  };
-
   render() {
     let { userNotes } = this.props;
 
     if (userNotes) {
       return (
         <Container className="notesPage" fluid>
-          <Row >
+          <Row>
             <Button
-            variant="outline-success"
+              variant="outline-success"
               className="m-2"
               onClick={() => this.setState({ addNoteModalShow: true })}
             >
-              <i className="fas fa-plus" /> Add Note &nbsp;<i className="far fa-sticky-note"></i>
+              <i className="fas fa-plus" /> Add Note &nbsp;
+              <i className="far fa-sticky-note" />
             </Button>
             <Button
-            variant="outline-success"
+              variant="outline-success"
               className="m-2"
               onClick={() => this.setState({ addListModalShow: true })}
             >
-              <i className="fas fa-plus" /> Add List &nbsp;<i className="fas fa-list"></i>
+              <i className="fas fa-plus" /> Add List &nbsp;
+              <i className="fas fa-list" />
             </Button>
           </Row>
           <Row className="notesContent mt-3">
@@ -130,12 +103,6 @@ class Notes extends React.Component {
             addNoteModalShow={this.state.addNoteModalShow}
             addNoteModalClose={this.addNoteModalClose}
             addNoteModalSaveAndClose={this.addNoteModalSaveAndClose}
-          />
-          <EditNoteModal
-            editNoteModalShow={this.state.editNoteModalShow}
-            editNoteModalClose={this.editNoteModalClose}
-            editNoteModalSaveAndClose={this.editNoteModalSaveAndClose}
-            noteID={this.state.editNoteCache}
           />
           <AddListModal
             addListModalShow={this.state.addListModalShow}

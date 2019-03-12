@@ -1,0 +1,15 @@
+.notesContent {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 5%;
+  justify-content: center;
+  align-items: center;
+}
+
+.notesPage {
+  margin-top: 5%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  height: 100vh;
+}
