@@ -3,11 +3,12 @@ import React from "react";
 const ColorPicker = props => {
   const colors = [
     "white",
-    "#F4F4D8",
-    "#E8C384",
-    "#DFE56C",
-    "#D6C621",
-    "#A4635F"
+    "#F28B82",
+    "#FFF4B1",
+    "#CCFF90",
+    "#A7FFEB",
+    "#D7AEFB",
+    "#FDCFE8"
   ];
 
   return (
