@@ -10,18 +10,13 @@ import {
 import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import ColorPicker from "./ColorPicker";
 
 class EditListModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: this.props.userNotesObject[this.props.noteID].type,
-      title: this.props.userNotesObject[this.props.noteID].title,
-      list: this.props.userNotesObject[this.props.noteID].list,
-      createdAt: this.props.userNotesObject[this.props.noteID].createdAt,
-      editedAt: this.props.userNotesObject[this.props.noteID].editedAt,
-      pinned: this.props.userNotesObject[this.props.noteID].pinned,
-      color: this.props.userNotesObject[this.props.noteID].color,
+      ...this.props.userNotesObject[this.props.noteID],
       listItemText: ""
     };
   }
@@ -101,12 +96,16 @@ class EditListModal extends Component {
       createdAt: this.state.createdAt,
       editedAt: new Date(),
       pinned: this.state.pinned,
-      color: this.state.color,
-
+      color: this.state.color
     };
 
     this.props.editListModalSaveAndClose(newNote);
     this.setState({ listItemText: "" });
+  };
+
+  changeColor = color => {
+    console.log(color);
+    this.setState({ color });
   };
 
   render() {
@@ -192,13 +191,11 @@ class EditListModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
+            <ColorPicker changeColor={this.changeColor} />
             <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
             </Button>
-            <Button
-              variant="success"
-              onClick={this.saveAndClose}
-            >
+            <Button variant="success" onClick={this.saveAndClose}>
               Save & Close
             </Button>
           </Modal.Footer>
