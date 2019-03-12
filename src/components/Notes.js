@@ -20,31 +20,12 @@ class Notes extends React.Component {
       editNoteModalShow: false,
       addListModalShow: false,
       editListModalShow: false,
-      editNoteCache: null,
-      noteTemplate: {
-        type: "text",
-        title: "",
-        text: "",
-        createdAt: new Date(),
-        editedAt: "",
-        pinned: false,
-        color: "white"
-      },
-      listTemplate: {
-        type: "list",
-        title: "",
-        list: [],
-        createdAt: new Date(),
-        editedAt: "",
-        pinned: false,
-        color: "white"
-      }
+      editNoteCache: null
     };
   }
 
   // add note modal functions
   addNoteModalClose = type => {
-    console.log(`add ${type} modal closing`);
     if (type === "note") {
       this.setState({ addNoteModalShow: false });
     } else {
@@ -89,7 +70,6 @@ class Notes extends React.Component {
   };
 
   editNoteModalClose = () => {
-    console.log("edit note modal closing");
     this.setState({ editNoteModalShow: false, editNoteCache: null });
   };
 
@@ -109,34 +89,29 @@ class Notes extends React.Component {
     this.setState({ editNoteModalShow: false, editNoteCache: null });
   };
 
-  logout = () => {
-    const { firebase } = this.props;
-    firebase.logout();
-  };
-
   render() {
     let { userNotes } = this.props;
 
     if (userNotes) {
       return (
-        <Container>
-          <Row className="justify-content-center mt-3">
+        <Container className="notesPage" fluid>
+          <Row >
             <Button
             variant="outline-success"
               className="m-2"
               onClick={() => this.setState({ addNoteModalShow: true })}
             >
-              <i className="fas fa-plus" /> Add Note &nbsp;<i class="far fa-sticky-note"></i>
+              <i className="fas fa-plus" /> Add Note &nbsp;<i className="far fa-sticky-note"></i>
             </Button>
             <Button
             variant="outline-success"
               className="m-2"
               onClick={() => this.setState({ addListModalShow: true })}
             >
-              <i className="fas fa-plus" /> Add List &nbsp;<i class="fas fa-list"></i>
+              <i className="fas fa-plus" /> Add List &nbsp;<i className="fas fa-list"></i>
             </Button>
           </Row>
-          <Row className="justify-content-center mt-3">
+          <Row className="notesContent mt-3">
             {userNotes
               .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
               .map(note => {

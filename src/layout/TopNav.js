@@ -12,7 +12,7 @@ const TopNav = props => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" className="navbar-fixed-top">
+    <Navbar bg="dark" variant="dark" fixed="top">
       <Link to="/"><Navbar.Brand>Notes</Navbar.Brand></Link>
       <Nav className="ml-auto">
         {props.auth.hasOwnProperty("uid") ? null : <Link className="nav-link" to="/register">Sign Up</Link>}

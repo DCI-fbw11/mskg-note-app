@@ -38,9 +38,9 @@ class Register extends Component {
 
   render() {
     return (
-      <Container>
-        <Row className="justify-content-center mt-5">
-          <Col sm={5}>
+      <Container className="welcome" fluid>
+        <Row className="welcomeContent">
+          <Col lg={6} className="pt-2" style={{color:"white",backgroundColor:"rgba(52,58,64,0.6)",borderRadius:"10px"}}>
             <h4>Register</h4>
             <Form onSubmit={this.registerUser}>
               <Form.Group controlId="formBasicEmail">
@@ -70,7 +70,7 @@ class Register extends Component {
                   onChange={this.changeHander}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="outline-light" type="submit">
                 Register
               </Button>
             </Form>

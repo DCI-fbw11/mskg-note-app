@@ -12,7 +12,6 @@ const Note = props => {
           {note.title === "" ? "no title" : note.title}
         </Card.Title>
         <Card.Text>{note.text}</Card.Text>
-
         <Button className="float-right" size="sm" variant="outline-secondary" onClick={() => editNote(note.id)}>
           <i className="fa fa-edit" />
         </Button>

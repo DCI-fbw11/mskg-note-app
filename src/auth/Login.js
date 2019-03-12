@@ -33,9 +33,9 @@ class Login extends Component {
 
   render() {
     return (
-      <Container>
-        <Row className="justify-content-center mt-5">
-          <Col sm={5}>
+      <Container className="welcome" fluid>
+        <Row className="welcomeContent">
+          <Col lg={6} className="pt-2" style={{color:"white",backgroundColor:"rgba(52,58,64,0.6)",borderRadius:"10px"}}>
             <h4>Login</h4>
             <Form onSubmit={this.loginUser}>
               <Form.Group controlId="formBasicEmail">
@@ -45,6 +45,7 @@ class Login extends Component {
                   placeholder="Enter email"
                   name="email"
                   onChange={this.changeHander}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
@@ -54,9 +55,10 @@ class Login extends Component {
                   placeholder="Password"
                   name="password"
                   onChange={this.changeHander}
+                  required
                 />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="outline-light" type="submit">
                 Login
               </Button>
             </Form>
