@@ -28,7 +28,7 @@ class Notes extends React.Component {
     }
   };
 
-  addModalSaveAndClose = (newNote,type) => {
+  addModalSaveAndClose = (newNote, type) => {
     const { firestore, userID } = this.props;
 
     firestore.add(
@@ -40,12 +40,11 @@ class Notes extends React.Component {
       newNote
     );
 
-    if(type==="note"){
+    if (type === "note") {
       this.setState({ addNoteModalShow: false });
     } else {
       this.setState({ addListModalShow: false });
     }
-
   };
 
   render() {
@@ -75,7 +74,7 @@ class Notes extends React.Component {
           <Row className="notesContent mt-3">
             {userNotes
               .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
-              .map((note,index) => {
+              .map((note, index) => {
                 if (note.type === "text") {
                   return (
                     <Note note={note} editNote={this.editNote} key={index} />

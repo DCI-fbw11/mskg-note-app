@@ -17,17 +17,18 @@ const TopNav = props => {
         <Navbar.Brand>Notes</Navbar.Brand>
       </Link>
       <Nav className="ml-auto">
-      {props.auth.hasOwnProperty("uid") ? (
-          <span className="nav-link disabled" >{props.auth.email}</span>
+        {props.auth.hasOwnProperty("uid") ? (
+          <span className="nav-link disabled">{props.auth.email}</span>
         ) : null}
+
         {props.auth.hasOwnProperty("uid") ? null : (
-          <Link className="nav-link" to="/register">
-            Sign Up
+          <Link className="nav-link" to="/login">
+            Login
           </Link>
         )}
         {props.auth.hasOwnProperty("uid") ? null : (
-          <Link className="nav-link" to="/login">
-            Sign In
+          <Link className="nav-link" to="/register">
+            Register
           </Link>
         )}
         {props.auth.hasOwnProperty("uid") ? (

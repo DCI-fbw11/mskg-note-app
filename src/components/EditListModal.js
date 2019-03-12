@@ -84,6 +84,7 @@ class EditListModal extends Component {
     this.setState({
       title: this.props.userNotesObject[this.props.noteID].title,
       list: this.props.userNotesObject[this.props.noteID].list,
+      color: this.props.userNotesObject[this.props.noteID].color,
       listItemText: ""
     });
   };
@@ -190,22 +191,12 @@ class EditListModal extends Component {
               </InputGroup>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <div>
-              <i
-                class="fas fa-palette"
-                style={{
-                  fontSize: "1.6rem",
-                  color: this.state.color,
-                  textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)"
-                }}
-              />
-            </div>
+          <Modal.Footer style={{backgroundColor: this.state.color}}>
             <ColorPicker changeColor={this.changeColor} />
-            <Button variant="danger" onClick={this.deleteNote}>
+            <Button variant="dark" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
             </Button>
-            <Button variant="success" onClick={this.saveAndClose}>
+            <Button variant="dark" onClick={this.saveAndClose}>
               Save & Close
             </Button>
           </Modal.Footer>
