@@ -45,7 +45,7 @@ class List extends Component {
         <Card
           style={{ width: "20rem", backgroundColor: note.color }}
           key={uuid()}
-          className="m-3"
+          className="note-card m-3"
         >
           <Card.Body>
             <Card.Title style={note.title === "" ? { color: "#dddddd" } : null}>
@@ -74,7 +74,7 @@ class List extends Component {
             </ul>
 
             <Button
-              className="float-right"
+              className="note-btn float-right"
               size="sm"
               variant="outline-secondary"
               onClick={this.modalOpen}
