@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { Button, Row, Container } from "react-bootstrap";
-import uuid from "uuid";
 
 import AddNoteModal from "./AddNoteModal";
 import AddListModal from "./AddListModal";
@@ -29,7 +28,7 @@ class Notes extends React.Component {
     }
   };
 
-  addNoteModalSaveAndClose = newNote => {
+  addModalSaveAndClose = (newNote,type) => {
     const { firestore, userID } = this.props;
 
     firestore.add(
@@ -41,23 +40,12 @@ class Notes extends React.Component {
       newNote
     );
 
-    this.setState({ addNoteModalShow: false });
-  };
+    if(type==="note"){
+      this.setState({ addNoteModalShow: false });
+    } else {
+      this.setState({ addListModalShow: false });
+    }
 
-  // add list modal functions
-  addListModalSaveAndClose = newNote => {
-    const { firestore, userID } = this.props;
-
-    firestore.add(
-      {
-        collection: "notes",
-        doc: userID,
-        subcollections: [{ collection: "notes" }]
-      },
-      newNote
-    );
-
-    this.setState({ addListModalShow: false });
   };
 
   render() {
@@ -87,14 +75,14 @@ class Notes extends React.Component {
           <Row className="notesContent mt-3">
             {userNotes
               .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
-              .map(note => {
+              .map((note,index) => {
                 if (note.type === "text") {
                   return (
-                    <Note note={note} editNote={this.editNote} key={uuid()} />
+                    <Note note={note} editNote={this.editNote} key={index} />
                   );
                 } else {
                   return (
-                    <List note={note} editList={this.editList} key={uuid()} />
+                    <List note={note} editList={this.editList} key={index} />
                   );
                 }
               })}
@@ -102,12 +90,12 @@ class Notes extends React.Component {
           <AddNoteModal
             addNoteModalShow={this.state.addNoteModalShow}
             addNoteModalClose={this.addNoteModalClose}
-            addNoteModalSaveAndClose={this.addNoteModalSaveAndClose}
+            addModalSaveAndClose={this.addModalSaveAndClose}
           />
           <AddListModal
             addListModalShow={this.state.addListModalShow}
             addNoteModalClose={this.addNoteModalClose}
-            addListModalSaveAndClose={this.addListModalSaveAndClose}
+            addModalSaveAndClose={this.addModalSaveAndClose}
           />
         </Container>
       );

@@ -191,6 +191,16 @@ class EditListModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
+            <div>
+              <i
+                class="fas fa-palette"
+                style={{
+                  fontSize: "1.6rem",
+                  color: this.state.color,
+                  textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)"
+                }}
+              />
+            </div>
             <ColorPicker changeColor={this.changeColor} />
             <Button variant="danger" onClick={this.deleteNote}>
               <i className="fa fa-trash" />

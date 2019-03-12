@@ -78,7 +78,7 @@ class EditNoteModal extends Component {
             </InputGroup>
           </Modal.Body>
           <Modal.Footer>
-            <div>
+            <div className="float-left">
               <i
                 class="fas fa-palette"
                 style={{

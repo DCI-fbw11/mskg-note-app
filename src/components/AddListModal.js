@@ -15,7 +15,6 @@ class AddListModal extends Component {
       type: "list",
       title: "",
       list: [],
-      createdAt: new Date(),
       editedAt: "",
       pinned: false,
       color: "white",
@@ -37,14 +36,12 @@ class AddListModal extends Component {
     e.preventDefault();
     let newListItem = {
       text: this.state.listItemText,
-      isDone: false,
+      isDone: false
     };
-
-
 
     this.setState({
       list: [...this.state.list, newListItem],
-      listItemText: "",
+      listItemText: ""
     });
   };
 
@@ -77,18 +74,13 @@ class AddListModal extends Component {
     this.setState({ title: "", list: [] });
   };
 
-  saveAndClose = note => {
-    let newNote = {
-      type: this.state.type,
-      title: this.state.title,
-      list: this.state.list,
-      createdAt: this.state.createdAt,
-      editedAt: this.state.editedAt,
-      pinned: this.state.pinned,
-      color: this.state.color,
+  saveAndClose = () => {
+    let note = {
+      ...this.state,
+      createdAt: new Date()
     };
 
-    this.props.addListModalSaveAndClose(newNote);
+    this.props.addModalSaveAndClose(note, "list");
     this.setState({ title: "", list: [] });
   };
 

@@ -8,7 +8,6 @@ class AddNoteModal extends Component {
       type: "text",
       title: "",
       text: "",
-      createdAt: new Date(),
       editedAt: "",
       pinned: false,
       color: "white"
@@ -25,9 +24,13 @@ class AddNoteModal extends Component {
     this.setState({ title: "", text: "" });
   };
 
-  saveAndClose = note => {
-    // console.log(note)
-    this.props.addNoteModalSaveAndClose(note);
+  saveAndClose = () => {
+    let note = {
+      ...this.state,
+      createdAt: new Date()
+    };
+
+    this.props.addModalSaveAndClose(note, "note");
     this.setState({ title: "", text: "" });
   };
 
@@ -68,7 +71,7 @@ class AddNoteModal extends Component {
             </InputGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="success" onClick={() => this.saveAndClose(this.state)}>
+            <Button variant="success" onClick={this.saveAndClose}>
               Save & Close
             </Button>
           </Modal.Footer>
