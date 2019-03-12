@@ -43,6 +43,7 @@ class EditNoteModal extends Component {
   };
 
   render() {
+
     return (
       <div>
         <Modal
@@ -62,7 +63,7 @@ class EditNoteModal extends Component {
                 aria-describedby="basic-addon1"
                 name="title"
                 onChange={this.onChange}
-                value={this.state.title? this.state.title : ""}
+                value={this.state.title}
               />
             </InputGroup>
           </Modal.Header>
@@ -73,7 +74,7 @@ class EditNoteModal extends Component {
                 aria-label="With textarea"
                 name="text"
                 onChange={this.onChange}
-                value={this.state.text ? this.state.text : ""}
+                value={this.state.text}
               />
             </InputGroup>
           </Modal.Body>
