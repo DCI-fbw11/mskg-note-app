@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import uuid from "uuid";
 import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
@@ -37,6 +37,11 @@ class List extends Component {
     this.setState({ modalShow: false });
   };
 
+  pinNote = () => {
+    const { pinNote, note } = this.props;
+    pinNote(note.id);
+  };
+
   render() {
     let { note } = this.props;
 
@@ -44,15 +49,18 @@ class List extends Component {
       <div>
         <Card
           style={{ width: "20rem", backgroundColor: note.color }}
-          key={uuid()}
-          className="note-card m-3"
+          key={note.id}
+          className="megacard m-3"
         >
           <Card.Body>
             <Card.Title style={note.title === "" ? { color: "#dddddd" } : null}>
               {note.title === "" ? "no title" : note.title}
+              <i
+                className="fas fa-thumbtack note-btn float-right"
+                onClick={this.pinNote}
+              />
             </Card.Title>
-
-            <ul>
+            <ul onClick={this.modalOpen}>
               {note.list.map((listItem, index) => {
                 if (listItem) {
                   return (
@@ -72,15 +80,6 @@ class List extends Component {
                 }
               })}
             </ul>
-
-            <Button
-              className="note-btn float-right"
-              size="sm"
-              variant="outline-secondary"
-              onClick={this.modalOpen}
-            >
-              <i className="fa fa-edit" />
-            </Button>
           </Card.Body>
         </Card>
         <EditListModal

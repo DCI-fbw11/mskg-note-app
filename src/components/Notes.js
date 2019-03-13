@@ -47,13 +47,86 @@ class Notes extends React.Component {
     }
   };
 
+  pinNote = clickedID => {
+    const { firestore, userID, userNotesObject } = this.props;
+
+    let editedNote = {
+      ...userNotesObject[clickedID],
+      pinned: !userNotesObject[clickedID].pinned
+    };
+
+    firestore.update(
+      {
+        collection: "notes",
+        doc: userID,
+        subcollections: [{ collection: "notes", doc: clickedID }]
+      },
+      editedNote
+    );
+  };
+
   render() {
     let { userNotes } = this.props;
+    let unpinnedNotes;
+    let pinnedNotes;
+    if (userNotes) {
+      unpinnedNotes = userNotes
+        .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
+        .map((note, index) => {
+          if (note.type === "text" && note.pinned === false) {
+            return (
+              <Note
+                note={note}
+                editNote={this.editNote}
+                pinNote={this.pinNote}
+                key={index}
+              />
+            );
+          } else if (note.type === "list" && note.pinned === false) {
+            return (
+              <List
+                note={note}
+                editList={this.editList}
+                key={index}
+                pinNote={this.pinNote}
+              />
+            );
+          } else {
+            return null;
+          }
+        });
+      pinnedNotes = userNotes
+        .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
+        .map((note, index) => {
+          if (note.type === "text" && note.pinned) {
+            return (
+              <Note
+                note={note}
+                editNote={this.editNote}
+                pinNote={this.pinNote}
+                key={index}
+              />
+            );
+          } else if (note.type === "list" && note.pinned) {
+            return (
+              <List
+                note={note}
+                editList={this.editList}
+                key={index}
+                pinNote={this.pinNote}
+              />
+            );
+          } else {
+            return null;
+          }
+        })
+        .filter(note => note);
+    }
 
     if (userNotes) {
       return (
         <Container className="notesPage" fluid>
-          <Row id="notesButtons">
+          <Row>
             <Button
               variant="outline-success"
               className="m-2"
@@ -71,21 +144,18 @@ class Notes extends React.Component {
               <i className="fas fa-list" />
             </Button>
           </Row>
-          <Row className="notesContent mt-3">
-            {userNotes
-              .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
-              .map((note, index) => {
-                if (note.type === "text") {
-                  return (
-                    <Note note={note} editNote={this.editNote} key={index} />
-                  );
-                } else {
-                  return (
-                    <List note={note} editList={this.editList} key={index} />
-                  );
-                }
-              })}
+          <Row className="pinnedNotesHeader">
+            {pinnedNotes.length ? (
+              <p style={{ fontWeight: "bold" }}>Pinned Notes:</p>
+            ) : null}
           </Row>
+          <Row className="notesContent m-5">{pinnedNotes}</Row>
+          <Row className="pinnedNotesHeader">
+            {pinnedNotes.length ? (
+              <p style={{ fontWeight: "bold" }}>Other Notes:</p>
+            ) : null}
+          </Row>
+          <Row className="notesContent mt-3">{unpinnedNotes}</Row>
           <AddNoteModal
             addNoteModalShow={this.state.addNoteModalShow}
             addNoteModalClose={this.addNoteModalClose}

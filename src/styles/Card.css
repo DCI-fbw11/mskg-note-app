@@ -1,8 +1,14 @@
 .note-btn {
   opacity: 0;
-  transition: all 0.2s linear;
+  transition: all 0.4s ease-in-out;
+  color: black;
+  font-size: 0.9em;
 }
 
-.card-body:hover > .note-btn {
+.note-btn:hover {
+  cursor: pointer;
+}
+
+.card-body:hover .note-btn {
   opacity: 1;
 }
