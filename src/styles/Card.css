@@ -16,3 +16,9 @@
 .card-body:hover .note-btn {
   opacity: 1;
 }
+
+.noteTimestamp {
+  font-size: 0.8em;
+  padding-top: 0.8em;
+  color: #909296;
+}

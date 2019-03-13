@@ -11,6 +11,7 @@ import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import ColorPicker from "./ColorPicker";
+import moment from "moment";
 
 class EditListModal extends Component {
   constructor(props) {
@@ -90,7 +91,7 @@ class EditListModal extends Component {
   };
 
   saveAndClose = () => {
-    let newNote = {
+    let editedNote = {
       type: this.state.type,
       title: this.state.title,
       list: this.state.list,
@@ -99,17 +100,34 @@ class EditListModal extends Component {
       pinned: this.state.pinned,
       color: this.state.color
     };
-
-    this.props.editListModalSaveAndClose(newNote);
+    this.props.editListModalSaveAndClose(editedNote);
     this.setState({ listItemText: "" });
   };
 
   changeColor = color => {
-    console.log(color);
     this.setState({ color });
   };
 
   render() {
+    const {
+      title,
+      list,
+      createdAt,
+      editedAt,
+      color,
+      listItemText
+    } = this.state;
+
+    let createdUnixTime = createdAt.seconds * 1000;
+
+    let editedUnixTime;
+    let editedAtMoment;
+    if (editedAt) {
+      editedUnixTime = editedAt.seconds * 1000;
+      editedAtMoment = moment(editedUnixTime).calendar();
+    }
+    let createdAtMoment = moment(createdUnixTime).calendar();
+
     return (
       <div>
         <Modal
@@ -128,14 +146,14 @@ class EditListModal extends Component {
                 aria-label="note title"
                 aria-describedby="basic-addon1"
                 name="title"
-                value={this.state.title}
+                value={title}
                 onChange={this.onChange}
               />
             </InputGroup>
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
-              {this.state.list.map((listItem, index) => {
+              {list.map((listItem, index) => {
                 if (listItem) {
                   return (
                     <div key={index}>
@@ -180,7 +198,7 @@ class EditListModal extends Component {
                   aria-label="add list item here"
                   name="listItemText"
                   placeholder="add a list item here"
-                  value={this.state.listItemText}
+                  value={listItemText}
                   onChange={this.onChange}
                   required
                 />
@@ -191,8 +209,12 @@ class EditListModal extends Component {
                 </InputGroup.Append>
               </InputGroup>
             </Form>
+            <span className="float-right noteTimestamp">
+              {editedAtMoment ? "Edited:" : "Created:"}{" "}
+              {editedAtMoment ? editedAtMoment : createdAtMoment}
+            </span>
           </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: this.state.color }}>
+          <Modal.Footer style={{ backgroundColor: color }}>
             <ColorPicker changeColor={this.changeColor} />
             <Button variant="dark" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
@@ -209,7 +231,6 @@ class EditListModal extends Component {
 export default compose(
   withFirestore,
   connect(state => ({
-    userNotes: state.firestore.ordered.userNotes,
     userNotesObject: state.firestore.data.userNotes,
     userID: state.firebase.auth.uid
   }))

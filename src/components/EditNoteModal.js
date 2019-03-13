@@ -4,6 +4,7 @@ import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import ColorPicker from "./ColorPicker";
+import moment from "moment";
 
 class EditNoteModal extends Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class EditNoteModal extends Component {
       ...this.state,
       editedAt: new Date()
     };
+    console.log(Date.now());
     this.props.editNoteModalSaveAndClose(editedNote);
   };
 
@@ -48,6 +50,18 @@ class EditNoteModal extends Component {
   };
 
   render() {
+    const { title, text, createdAt, editedAt, color } = this.state;
+
+    let createdUnixTime = createdAt.seconds * 1000;
+
+    let editedUnixTime;
+    let editedAtMoment;
+    if (editedAt) {
+      editedUnixTime = editedAt.seconds * 1000;
+      editedAtMoment = moment(editedUnixTime).calendar();
+    }
+    let createdAtMoment = moment(createdUnixTime).calendar();
+
     return (
       <div>
         <Modal
@@ -67,7 +81,7 @@ class EditNoteModal extends Component {
                 aria-describedby="basic-addon1"
                 name="title"
                 onChange={this.onChange}
-                value={this.state.title}
+                value={title}
               />
             </InputGroup>
           </Modal.Header>
@@ -78,11 +92,15 @@ class EditNoteModal extends Component {
                 aria-label="With textarea"
                 name="text"
                 onChange={this.onChange}
-                value={this.state.text}
+                value={text}
               />
             </InputGroup>
+            <span className="float-right noteTimestamp">
+              {editedAtMoment ? "Edited:" : "Created:"}{" "}
+              {editedAtMoment ? editedAtMoment : createdAtMoment}
+            </span>
           </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: this.state.color }}>
+          <Modal.Footer style={{ backgroundColor: color }}>
             <ColorPicker changeColor={this.changeColor} />
             <Button variant="dark" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
@@ -99,7 +117,6 @@ class EditNoteModal extends Component {
 export default compose(
   withFirestore,
   connect(state => ({
-    userNotes: state.firestore.ordered.userNotes,
     userNotesObject: state.firestore.data.userNotes,
     userID: state.firebase.auth.uid
   }))

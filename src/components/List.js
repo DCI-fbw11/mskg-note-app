@@ -57,7 +57,7 @@ class List extends Component {
           <Card.Body>
             <Card.Title style={note.title === "" ? { color: "#dddddd" } : null}>
               {note.title === "" ? "no title" : note.title}
-              <i
+              <button
                 className="fas fa-thumbtack note-btn float-right"
                 onClick={this.pinNote}
               />
