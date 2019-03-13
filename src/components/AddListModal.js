@@ -159,9 +159,10 @@ class AddListModal extends Component {
                   placeholder="add a list item here"
                   value={this.state.listItemText}
                   onChange={this.onChange}
+                  required
                 />
                 <InputGroup.Append>
-                  <Button variant="outline-success" onClick={this.addListItem}>
+                  <Button type="submit" variant="outline-success">
                     Add Item
                   </Button>
                 </InputGroup.Append>

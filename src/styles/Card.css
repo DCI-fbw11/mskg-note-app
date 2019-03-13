@@ -3,6 +3,10 @@
   transition: all 0.4s ease-in-out;
   color: black;
   font-size: 0.9em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
 }
 
 .note-btn:hover {

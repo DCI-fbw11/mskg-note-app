@@ -36,7 +36,8 @@ class Note extends Component {
     this.setState({ modalShow: false });
   };
 
-  pinNote = () => {
+  pinNote = e => {
+    e.stopPropagation();
     const { pinNote, note } = this.props;
     pinNote(note.id);
   };
@@ -50,6 +51,7 @@ class Note extends Component {
           style={{ width: "20rem", backgroundColor: note.color }}
           key={note.id}
           className="megacard m-3"
+          onClick={this.modalOpen}
         >
           <Card.Body>
             <Card.Title style={note.title === "" ? { color: "#dddddd" } : null}>
@@ -59,7 +61,11 @@ class Note extends Component {
                 onClick={this.pinNote}
               />
             </Card.Title>
-            <Card.Text onClick={this.modalOpen}>{note.text}</Card.Text>
+            <Card.Text>
+              {note.text.length > 255
+                ? `${note.text.slice(0, 255)}...`
+                : note.text}
+            </Card.Text>
           </Card.Body>
         </Card>
         <EditNoteModal

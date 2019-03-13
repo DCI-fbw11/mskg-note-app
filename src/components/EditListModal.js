@@ -182,16 +182,17 @@ class EditListModal extends Component {
                   placeholder="add a list item here"
                   value={this.state.listItemText}
                   onChange={this.onChange}
+                  required
                 />
                 <InputGroup.Append>
-                  <Button variant="outline-success" onClick={this.addListItem}>
+                  <Button type="submit" variant="outline-success">
                     Add Item
                   </Button>
                 </InputGroup.Append>
               </InputGroup>
             </Form>
           </Modal.Body>
-          <Modal.Footer style={{backgroundColor: this.state.color}}>
+          <Modal.Footer style={{ backgroundColor: this.state.color }}>
             <ColorPicker changeColor={this.changeColor} />
             <Button variant="dark" onClick={this.deleteNote}>
               <i className="fa fa-trash" />
