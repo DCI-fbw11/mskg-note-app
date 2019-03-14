@@ -30,10 +30,13 @@ class Login extends Component {
         email,
         password
       })
+      .then(this.setState({ password: "" }))
       .catch(err => this.setState({ error: err.message }));
   };
 
   render() {
+    const { error, password } = this.state;
+
     return (
       <Container className="welcome" fluid>
         <Row className="welcomeContent">
@@ -65,6 +68,7 @@ class Login extends Component {
                   placeholder="Password"
                   name="password"
                   onChange={this.changeHander}
+                  value={password}
                   required
                 />
               </Form.Group>
@@ -78,7 +82,7 @@ class Login extends Component {
                 </Link>
               </span>
             </Form>
-            <h5 className="mt-3">{this.state.error}</h5>
+            <h5 className="mt-3">{error}</h5>
           </Col>
         </Row>
       </Container>

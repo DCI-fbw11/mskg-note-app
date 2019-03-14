@@ -85,7 +85,7 @@ class AddListModal extends Component {
   };
 
   render() {
-    const { list } = this.state;
+    const { list, title, listItemText } = this.state;
 
     return (
       <div>
@@ -105,7 +105,7 @@ class AddListModal extends Component {
                 aria-label="note title"
                 aria-describedby="basic-addon1"
                 name="title"
-                value={this.state.title}
+                value={title}
                 onChange={this.onChange}
               />
             </InputGroup>
@@ -157,7 +157,7 @@ class AddListModal extends Component {
                   aria-label="add list item here"
                   name="listItemText"
                   placeholder="add a list item here"
-                  value={this.state.listItemText}
+                  value={listItemText}
                   onChange={this.onChange}
                   required
                 />

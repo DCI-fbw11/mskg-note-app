@@ -35,6 +35,8 @@ class AddNoteModal extends Component {
   };
 
   render() {
+    const { title, text } = this.state;
+
     return (
       <div>
         <Modal
@@ -53,7 +55,7 @@ class AddNoteModal extends Component {
                 aria-label="note title"
                 aria-describedby="basic-addon1"
                 name="title"
-                value={this.state.title}
+                value={title}
                 onChange={this.onChange}
               />
             </InputGroup>
@@ -65,7 +67,7 @@ class AddNoteModal extends Component {
                 aria-label="With textarea"
                 placeholder="enter your note here"
                 name="text"
-                value={this.state.text}
+                value={text}
                 onChange={this.onChange}
               />
             </InputGroup>

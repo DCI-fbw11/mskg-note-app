@@ -45,6 +45,8 @@ class Register extends Component {
   };
 
   render() {
+    const { falsy, error } = this.state;
+
     return (
       <Container className="welcome" fluid>
         <Row className="welcomeContent">
@@ -86,11 +88,7 @@ class Register extends Component {
                   onChange={this.changeHander}
                 />
               </Form.Group>
-              <Button
-                variant="outline-light"
-                type="submit"
-                disabled={this.state.falsy}
-              >
+              <Button variant="outline-light" type="submit" disabled={falsy}>
                 Register
               </Button>
               <span className="redirect-text ml-2">
@@ -108,7 +106,7 @@ class Register extends Component {
                 />
               </Form.Row>
             </Form>
-            <h5 className="mt-3">{this.state.error}</h5>
+            <h5 className="mt-3">{error}</h5>
           </Col>
         </Row>
       </Container>

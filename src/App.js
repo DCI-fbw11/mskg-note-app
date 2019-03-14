@@ -5,6 +5,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Welcome from "./components/Welcome";
 import Notes from "./components/Notes";
+import PageNotFound from "./components/PageNotFound";
 
 import { UserIsAuthenticated, UserIsNotAuthenticated } from "./auth/auth";
 import { store } from "./config/store";
@@ -39,6 +40,7 @@ class App extends Component {
                 path="/welcome"
                 component={UserIsNotAuthenticated(Welcome)}
               />
+              <Route component={PageNotFound} />
             </Switch>
           </React.Fragment>
         </Router>

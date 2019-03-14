@@ -14,7 +14,10 @@ const TopNav = props => {
   return (
     <Navbar bg="dark" variant="dark" fixed="top">
       <Link to="/">
-        <Navbar.Brand>Notes</Navbar.Brand>
+        <Navbar.Brand>
+          <i className="far fa-lemon" />
+          &nbsp;&nbsp;<span style={{ color: "#eeee66" }}>Lemon</span>&nbsp;Notes
+        </Navbar.Brand>
       </Link>
       <Nav className="ml-auto">
         {props.auth.hasOwnProperty("uid") ? (

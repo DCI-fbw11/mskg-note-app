@@ -16,7 +16,7 @@ class Welcome extends Component {
             }}
           >
             <h1>Welcome!</h1>
-            <p>Notes are fun. Take some notes.</p>
+            <p>Notes are fun. Take some notes. Lemon notes.</p>
             <p>
               <Link to="/login">
                 <Button className="m-2" variant="outline-light">
