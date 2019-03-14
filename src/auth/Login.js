@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { firebaseConnect } from "react-redux-firebase";
+import { Link } from "react-router-dom";
+import "../styles/prelogin.css";
 
 class Login extends Component {
   constructor(props) {
@@ -35,7 +37,15 @@ class Login extends Component {
     return (
       <Container className="welcome" fluid>
         <Row className="welcomeContent">
-          <Col lg={6} className="pt-2" style={{color:"white",backgroundColor:"rgba(52,58,64,0.6)",borderRadius:"10px"}}>
+          <Col
+            lg={6}
+            className="pt-2"
+            style={{
+              color: "white",
+              backgroundColor: "rgba(52,58,64,0.6)",
+              borderRadius: "10px"
+            }}
+          >
             <h4>Login</h4>
             <Form onSubmit={this.loginUser}>
               <Form.Group controlId="formBasicEmail">
@@ -61,6 +71,12 @@ class Login extends Component {
               <Button variant="outline-light" type="submit">
                 Login
               </Button>
+              <span className="redirect-text ml-2">
+                Don't have an account?{" "}
+                <Link to="/register" className="card-link">
+                  Register
+                </Link>
+              </span>
             </Form>
             <h5 className="mt-3">{this.state.error}</h5>
           </Col>
