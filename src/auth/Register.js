@@ -3,6 +3,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { firebaseConnect } from "react-redux-firebase";
 import { Link } from "react-router-dom";
 import "../styles/prelogin.css";
+import ReCAPTCHA from "react-google-recaptcha";
 
 class Register extends Component {
   constructor(props) {
@@ -11,9 +12,14 @@ class Register extends Component {
       email: "",
       password: "",
       passwordRepeat: "",
-      error: ""
+      error: "",
+      falsy: true
     };
   }
+
+  recapChange = () => {
+    this.setState({ falsy: false });
+  };
 
   changeHander = e => {
     this.setState({
@@ -80,7 +86,11 @@ class Register extends Component {
                   onChange={this.changeHander}
                 />
               </Form.Group>
-              <Button variant="outline-light" type="submit">
+              <Button
+                variant="outline-light"
+                type="submit"
+                disabled={this.state.falsy}
+              >
                 Register
               </Button>
               <span className="redirect-text ml-2">
@@ -89,6 +99,14 @@ class Register extends Component {
                   Login
                 </Link>
               </span>
+              <Form.Row>
+                <ReCAPTCHA
+                  className="mt-2"
+                  onChange={this.recapChange}
+                  sitekey="6LeBppcUAAAAAGK8qfGsRGBofYrEq3tovNZFyF6o"
+                  theme="dark"
+                />
+              </Form.Row>
             </Form>
             <h5 className="mt-3">{this.state.error}</h5>
           </Col>
