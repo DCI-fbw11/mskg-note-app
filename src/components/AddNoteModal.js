@@ -27,7 +27,7 @@ class AddNoteModal extends Component {
   saveAndClose = () => {
     let note = {
       ...this.state,
-      createdAt: new Date()
+      createdAt: Date.now()
     };
 
     this.props.addModalSaveAndClose(note, "note");

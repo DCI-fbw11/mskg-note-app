@@ -50,7 +50,6 @@ class List extends Component {
       <div>
         <Card
           style={{ width: "20rem", backgroundColor: note.color }}
-          key={note.id}
           className="megacard m-3"
           onClick={this.modalOpen}
         >

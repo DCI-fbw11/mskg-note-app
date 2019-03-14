@@ -96,12 +96,12 @@ class EditListModal extends Component {
       title: this.state.title,
       list: this.state.list,
       createdAt: this.state.createdAt,
-      editedAt: new Date(),
+      editedAt: Date.now(),
       pinned: this.state.pinned,
       color: this.state.color
     };
     this.props.editListModalSaveAndClose(editedNote);
-    this.setState({ listItemText: "" });
+    this.setState({ listItemText: "", editedAt: Date.now() });
   };
 
   changeColor = color => {
@@ -118,15 +118,11 @@ class EditListModal extends Component {
       listItemText
     } = this.state;
 
-    let createdUnixTime = createdAt.seconds * 1000;
-
-    let editedUnixTime;
     let editedAtMoment;
     if (editedAt) {
-      editedUnixTime = editedAt.seconds * 1000;
-      editedAtMoment = moment(editedUnixTime).calendar();
+      editedAtMoment = moment(editedAt).calendar();
     }
-    let createdAtMoment = moment(createdUnixTime).calendar();
+    let createdAtMoment = moment(createdAt).calendar();
 
     return (
       <div>
@@ -231,6 +227,7 @@ class EditListModal extends Component {
 export default compose(
   withFirestore,
   connect(state => ({
+    userNotes: state.firestore.ordered.userNotes,
     userNotesObject: state.firestore.data.userNotes,
     userID: state.firebase.auth.uid
   }))

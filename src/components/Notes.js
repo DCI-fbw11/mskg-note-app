@@ -71,15 +71,15 @@ class Notes extends React.Component {
     let pinnedNotes;
     if (userNotes) {
       unpinnedNotes = userNotes
-        .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
-        .map((note, index) => {
+        .sort((a, b) => b.createdAt - a.createdAt)
+        .map(note => {
           if (note.type === "text" && note.pinned === false) {
             return (
               <Note
                 note={note}
                 editNote={this.editNote}
+                key={note.id}
                 pinNote={this.pinNote}
-                key={index}
               />
             );
           } else if (note.type === "list" && note.pinned === false) {
@@ -87,7 +87,7 @@ class Notes extends React.Component {
               <List
                 note={note}
                 editList={this.editList}
-                key={index}
+                key={note.id}
                 pinNote={this.pinNote}
               />
             );
@@ -97,14 +97,14 @@ class Notes extends React.Component {
         });
       pinnedNotes = userNotes
         .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
-        .map((note, index) => {
+        .map(note => {
           if (note.type === "text" && note.pinned) {
             return (
               <Note
                 note={note}
                 editNote={this.editNote}
+                key={note.id}
                 pinNote={this.pinNote}
-                key={index}
               />
             );
           } else if (note.type === "list" && note.pinned) {
@@ -112,7 +112,7 @@ class Notes extends React.Component {
               <List
                 note={note}
                 editList={this.editList}
-                key={index}
+                key={note.id}
                 pinNote={this.pinNote}
               />
             );

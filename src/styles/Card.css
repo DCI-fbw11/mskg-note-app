@@ -22,3 +22,9 @@
   padding-top: 0.8em;
   color: #909296;
 }
+
+@media (max-width: 550px) {
+  .note-btn {
+    opacity: 0.1;
+  }
+}

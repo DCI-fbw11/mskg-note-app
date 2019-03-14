@@ -39,10 +39,10 @@ class EditNoteModal extends Component {
   saveAndClose = () => {
     const editedNote = {
       ...this.state,
-      editedAt: new Date()
+      editedAt: Date.now()
     };
-    console.log(Date.now());
     this.props.editNoteModalSaveAndClose(editedNote);
+    this.setState({ editedAt: Date.now() });
   };
 
   changeColor = color => {
@@ -52,15 +52,11 @@ class EditNoteModal extends Component {
   render() {
     const { title, text, createdAt, editedAt, color } = this.state;
 
-    let createdUnixTime = createdAt.seconds * 1000;
-
-    let editedUnixTime;
     let editedAtMoment;
-    if (editedAt) {
-      editedUnixTime = editedAt.seconds * 1000;
-      editedAtMoment = moment(editedUnixTime).calendar();
+    if (editedAt !== "") {
+      editedAtMoment = moment(editedAt).calendar();
     }
-    let createdAtMoment = moment(createdUnixTime).calendar();
+    let createdAtMoment = moment(createdAt).calendar();
 
     return (
       <div>
@@ -117,6 +113,7 @@ class EditNoteModal extends Component {
 export default compose(
   withFirestore,
   connect(state => ({
+    userNotes: state.firestore.ordered.userNotes,
     userNotesObject: state.firestore.data.userNotes,
     userID: state.firebase.auth.uid
   }))
