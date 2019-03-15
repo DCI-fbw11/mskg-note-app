@@ -1,11 +1,7 @@
-
 //firebase & firestore
 import { createStore, combineReducers, compose } from "redux";
 // firebase stuff
-import {
-  reactReduxFirebase,
-  firebaseReducer
-} from "react-redux-firebase";
+import { reactReduxFirebase, firebaseReducer } from "react-redux-firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
@@ -13,6 +9,8 @@ import "firebase/database";
 import "firebase/firestore"; // <- needed if using firestore
 // import 'firebase/functions' // <- needed if using httpsCallable
 import { reduxFirestore, firestoreReducer } from "redux-firestore"; // <- needed if using firestore
+
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxn3J6s-W4qP7EBYzaeptb1QGWkVjM1MU",
@@ -53,8 +51,5 @@ const initialState = {};
 export const store = createStoreWithFirebase(
   rootReducer,
   initialState,
-  compose(
-    reactReduxFirebase(firebase),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  compose(composeWithDevTools(reactReduxFirebase(firebase)))
 );

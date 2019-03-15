@@ -5,3 +5,12 @@
 .card-link {
   color: #e2dede;
 }
+.logged-in-user {
+  display: inline;
+}
+
+@media (max-width: 550px) {
+  .logged-in-user {
+    display: none;
+  }
+}

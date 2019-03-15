@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { firebaseConnect } from "react-redux-firebase";
 import { Link } from "react-router-dom";
-import "../styles/prelogin.css";
 import ReCAPTCHA from "react-google-recaptcha";
 
 class Register extends Component {

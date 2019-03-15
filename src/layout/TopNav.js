@@ -21,7 +21,9 @@ const TopNav = props => {
       </Link>
       <Nav className="ml-auto">
         {props.auth.hasOwnProperty("uid") ? (
-          <span className="nav-link disabled">{props.auth.email}</span>
+          <span className="logged-in-user nav-link disabled">
+            {props.auth.email}
+          </span>
         ) : null}
 
         {props.auth.hasOwnProperty("uid") ? null : (

@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./styles/welcome.css";
 import "./styles/ColorPicker.css";
 import "./styles/Card.css";
-import "./styles/main.css"
-
+import "./styles/main.css";
+import "./styles/prelogin.css";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
